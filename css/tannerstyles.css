@@ -1,0 +1,56 @@
+/* Base styles for entire document */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #004080;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Header styling */
+#header {
+  background-color: #004080;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Navigation bar styling */
+#navbar {
+  background-color: #e9ecef;
+  padding: 10px;
+  text-align: center;
+}
+
+#navbar a {
+  margin: 0 15px;
+  color: #004080;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Main content block */
+#main {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: lightskyblue;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Footer styling */
+#footer {
+  background-color: #f1f1f1;
+  color: #666;
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9em;
+  margin-top: 40px;
+  border-top: 1px solid #ccc;
+}

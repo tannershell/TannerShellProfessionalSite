@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h2>Tennis Mini-Game</h2>
+<p>Use your mouse or finger to move the racket and keep the ball in play!</p>
+
+<canvas id="tennisGame" width="500" height="300" style="border:2px solid #004080; background-color: #d1f0ff;"></canvas>
+<br>
+<button id="restartBtn" style="display: none;">Try Again</button>
+
+<script>
+  const canvas = document.getElementById("tennisGame");
+  const ctx = canvas.getContext("2d");
+  const restartBtn = document.getElementById("restartBtn");
+
+  let animationId;
+  let isGameOver = false;
+
+  let racket = { width: 80, height: 10, x: 210, y: 280 };
+  let ball = { x: 250, y: 150, radius: 8, dx: 2, dy: -3 };
+
+  function drawRacket() {
+    ctx.fillStyle = "#004080";
+    ctx.fillRect(racket.x, racket.y, racket.width, racket.height);
+  }
+
+  function drawBall() {
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "yellow"; // Changed to yellow
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawRacket();
+    drawBall();
+
+    // Move ball
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+
+    // Wall collisions
+    if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+      ball.dx *= -1;
+    }
+
+    if (ball.y - ball.radius < 0) {
+      ball.dy *= -1;
+    }
+
+    // Racket collision
+    if (
+      ball.y + ball.radius >= racket.y &&
+      ball.x > racket.x &&
+      ball.x < racket.x + racket.width
+    ) {
+      ball.dy *= -1;
+    }
+
+    // Game over
+    if (ball.y + ball.radius > canvas.height) {
+      isGameOver = true;
+      cancelAnimationFrame(animationId);
+      restartBtn.style.display = "inline";
+      return;
+    }
+
+    animationId = requestAnimationFrame(draw);
+  }
+
+  function resetGame() {
+    ball = { x: 250, y: 150, radius: 8, dx: 2, dy: -3 };
+    racket = { width: 80, height: 10, x: 210, y: 280 };
+    isGameOver = false;
+    restartBtn.style.display = "none";
+    draw();
+  }
+
+  document.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    racket.x = mouseX - racket.width / 2;
+  });
+
+  canvas.addEventListener("touchmove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const touchX = e.touches[0].clientX - rect.left;
+    racket.x = touchX - racket.width / 2;
+  });
+
+  restartBtn.addEventListener("click", resetGame);
+
+  draw();
+</script>
+
+
+
+<h4>Back to the tennis <a href="scratch.html">website</a> </h4>
+<h4>See my professional <a href="../index.html">website</a> to learn more about me!</h4>
+    
+</body>
+</html>
